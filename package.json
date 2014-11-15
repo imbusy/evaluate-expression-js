@@ -1,0 +1,28 @@
+{
+  "name": "evaluate-expression-js",
+  "version": "1.0.0",
+  "description": "a function for evaluating basic arithmetic with infix notation",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imbusy/evaluate-expression-js.git"
+  },
+  "keywords": [
+    "arithmetic",
+    "postfix",
+    "infix"
+  ],
+  "author": "Lukas Steiblys",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imbusy/evaluate-expression-js/issues"
+  },
+  "homepage": "https://github.com/imbusy/evaluate-expression-js",
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.0.1"
+  }
+}
