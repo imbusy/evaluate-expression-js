@@ -88,7 +88,7 @@ function _evaluateInPostfix(input) {
 }
 
 module.exports = {
-   version: '1.0',
+   version: '1.0.0',
    
    /**
     * Evaluate an arithmetic string expression and return the result.
