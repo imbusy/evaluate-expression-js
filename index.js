@@ -1,10 +1,16 @@
 function _convertToPostfix(expression) {
+   // implements the Shunting-yard algorithm
+   // http://en.wikipedia.org/wiki/Shunting-yard_algorithm
+   
    var digits = {
       '0': 0, '1': 1, '2': 2,
       '3': 3, '4': 4, '5': 5,
       '6': 6, '7': 7, '8': 8,
       '9': 9
    };
+   
+   // the identity is used when there is only one argument to evaluate
+   // expressions such as "-123" and "+123"
    var binaryOps = {
       '+': { precedence: 1, op: function (x, y) { return x + y; }, identity: 0 },
       '-': { precedence: 1, op: function (x, y) { return x - y; }, identity: 0 },
@@ -51,22 +57,25 @@ function _convertToPostfix(expression) {
 }
 
 function _evaluateInPostfix(input) {
+   // evaluates the expression in parsed postfix notation
+   // http://en.wikipedia.org/wiki/Reverse_Polish_notation
+   
    var stack = [];
    var index = 0;
    while(index < input.length) {
       token = input[index];
-      if(isFinite(token)) {
+      if(isFinite(token)) { // a number
          stack.push(token);
-      } else {
-         if (stack.length >= 2) {
+      } else { // an operator
+         if (stack.length >= 2) { // evaluate "argument1 op argument2"
             var arg2 = stack.pop();
             var arg1 = stack.pop();
             stack.push(token.op(arg1, arg2));
-         } else if (stack.length == 1) {
+         } else if (stack.length == 1) { // evaluate "identity op argument"
             var arg2 = stack.pop();
             stack.push(token.op(token.identity, arg2));
          } else {
-            throw new SyntaxError('Missing argument for an operator.');
+            throw new SyntaxError('Missing numeric argument for an operator.');
          }
       }
       index += 1;
@@ -74,7 +83,7 @@ function _evaluateInPostfix(input) {
    if (stack.length == 1) {
       return stack.pop();
    } else {
-      throw new SyntaxError('Too many values in expression.');
+      throw new SyntaxError('Too many numeric values in expression.');
    }
 }
 
@@ -83,6 +92,9 @@ module.exports = {
    
    /**
     * Evaluate an arithmetic string expression and return the result.
+    *
+    * This function may evaluate expressions that might not be valid
+    * such as 123 * / + 245 without raising an exception.
     *
     * @param {String} expression
     * @return {Number}
